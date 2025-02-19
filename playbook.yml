@@ -1,0 +1,71 @@
+- name: Configure secuser 
+  hosts: kafkahosts
+  remote_user: ubuntu
+  tasks:
+    - name: Create secuser
+      become: yes
+      ansible.builtin.user:
+        name: secuser
+        group: users
+        groups: sudo, adm
+        shell: /bin/bash
+        create_home: yes
+    - name: Create .ssh dir for secuser
+      become: yes
+      ansible.builtin.file:
+        path: /home/secuser/.ssh
+        state: directory
+        owner: secuser
+        group: users
+    - name: Copy ssh key
+      become: yes
+      ansible.builtin.copy:
+        src: /home/mwierzbicki/workdir/ansible_ec2adduser/files/id_ed25519.pub
+        dest: /home/secuser/.ssh/authorized_keys
+        owner: secuser
+        group: users
+        mode: 0600
+    - name: Copy sudoers for secuser
+      become: yes
+      ansible.builtin.copy:
+        src: /home/mwierzbicki/workdir/ansible_ec2adduser/files/secuser.sudoers
+        dest: /etc/sudoers.d/secuser
+        owner: root
+        group: root
+        mode: 0440
+- name: Configure secuser emrhosts
+  hosts: emrhosts
+  remote_user: ec2-user
+  tasks:
+    - name: Create secuser
+      become: yes
+      ansible.builtin.user:
+        name: secuser
+        group: users
+        groups: wheel, adm
+        shell: /bin/bash
+        create_home: yes
+    - name: Create .ssh dir for secuser
+      become: yes
+      ansible.builtin.file:
+        path: /home/secuser/.ssh
+        state: directory
+        owner: secuser
+        group: users
+    - name: Copy ssh key
+      become: yes
+      ansible.builtin.copy:
+        src: /home/mwierzbicki/workdir/ansible_ec2adduser/files/id_ed25519.pub
+        dest: /home/secuser/.ssh/authorized_keys
+        owner: secuser
+        group: users
+        mode: 0600
+    - name: Copy sudoers for secuser
+      become: yes
+      ansible.builtin.copy:
+        src: /home/mwierzbicki/workdir/ansible_ec2adduser/files/secuser.sudoers
+        dest: /etc/sudoers.d/secuser
+        owner: root
+        group: root
+        mode: 0440
+        

@@ -1,0 +1,32 @@
+kafkahosts:
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: /home/mwierzbicki/Documents/aws/Valdi.pem
+  hosts:
+    kafka1: 
+      ansible_host: 10.16.143.220
+    kafka2:
+      ansible_host: 10.16.155.157
+    kafka3:
+      ansible_host: 10.16.136.137
+emrhosts:
+  vars:
+    ansible_user: ec2-user
+    ansible_ssh_private_key_file: /home/mwierzbicki/Documents/aws/Valdi.pem
+  hosts:
+    emr1:
+      ansible_host: 10.16.184.30
+    emr2:
+      ansible_host: 10.16.185.55
+    emr3:
+      ansible_host: 10.16.184.228
+    emr4:
+      ansible_host: 10.16.184.155
+    emr5:
+      ansible_host: 10.16.187.31
+qmmainthosts:
+  hosts:
+    qmmaint1:
+      ansible_host: 172.20.11.163
+      ansible_ssh_private_key_file: /home/mwierzbicki/Documents/aws/Qeymetrics.pem
+      ansible_user: ubuntu
