@@ -69,18 +69,16 @@
         group: root
         mode: 0440
 - name: Change auditd rules file
-  hosts: emrhosts
+  hosts: emrhosts,kafkahosts,reportshosts
   tasks:
     - name: Copy auditd rules file
       become: yes
       ansible.builtin.copy:
-        src: /home/mwierzbicki/workdir/auditd-ssm/30-pci-dss-v31.rules
+        src: /home/mwierzbicki/workdir/auditd-ssm/30-pci-dss-v32.rules
         dest: /etc/audit/rules.d/audit.rules
         owner: root
         group: root
         mode: 0640
-    - name: Restart auditd
+    - name: Apply auditd rules
       become: yes
-      ansible.builtin.systemd:
-        name: auditd
-        state: restarted
+      ansible.builtin.command: auditctl -R /etc/audit/rules.d/audit.rules
