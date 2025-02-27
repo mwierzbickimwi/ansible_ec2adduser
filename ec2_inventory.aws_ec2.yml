@@ -1,0 +1,14 @@
+plugin: amazon.aws.aws_ec2
+profile: valdi-adm
+regions:
+  - us-east-1
+include_filters:
+  - tag:Name: ValdiKafka/valdi-kafka-*
+  - tag:aws:elasticmapreduce:job-flow-id: j-281Z0GV1CUFYW
+groups:
+  kafkahosts: "'ValdiKafka/valdi-kafka' in tags.Name"
+  emrhosts: "'ETL' in tags"
+compose:
+  ansible_host: private_ip_address
+group_by:
+  - tag_Name

@@ -1,0 +1,11 @@
+- name: ping hosts
+  hosts: kafkahosts, emrhosts
+  tasks:
+    - name: ping
+      ansible.builtin.ping:
+    - debug:
+        msg: "kafkahsosts"
+      when: inventory_hostname in groups['kafkahosts']
+    - debug:
+        msg: "emrhosts"
+      when: inventory_hostname in groups['emrhosts']
