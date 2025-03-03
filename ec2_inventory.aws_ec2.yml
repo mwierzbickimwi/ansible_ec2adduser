@@ -5,10 +5,13 @@ regions:
 include_filters:
   - tag:Name: ValdiKafka/valdi-kafka-*
   - tag:aws:elasticmapreduce:job-flow-id: j-281Z0GV1CUFYW
+  - tag:Name: ValdiReportsFTP
 groups:
   kafkahosts: "'ValdiKafka/valdi-kafka' in tags.Name"
   emrhosts: "'ETL' in tags"
+  reportshosts: "'ValdiReportsFTP' in tags.Name"
 compose:
   ansible_host: private_ip_address
 group_by:
   - tag_Name
+#group_vars directory with yml files for each group
